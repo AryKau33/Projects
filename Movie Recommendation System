@@ -1,0 +1,338 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyOsWTtDGG8raq57zndYR+Lx",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/AryKau33/Projects/blob/main/Movie%20Recommendation%20System\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 1,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 1000
+        },
+        "id": "joMYt49Riq6A",
+        "outputId": "ebbd5fbb-57da-4047-b27e-50edc7e67096"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Collecting lightfm\n",
+            "  Using cached lightfm-1.17-cp311-cp311-linux_x86_64.whl\n",
+            "Collecting scipy\n",
+            "  Using cached scipy-1.15.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (61 kB)\n",
+            "Collecting numpy (from lightfm)\n",
+            "  Using cached numpy-2.2.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (62 kB)\n",
+            "Collecting requests (from lightfm)\n",
+            "  Using cached requests-2.32.3-py3-none-any.whl.metadata (4.6 kB)\n",
+            "Collecting scikit-learn (from lightfm)\n",
+            "  Using cached scikit_learn-1.6.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (18 kB)\n",
+            "Collecting charset-normalizer<4,>=2 (from requests->lightfm)\n",
+            "  Using cached charset_normalizer-3.4.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (35 kB)\n",
+            "Collecting idna<4,>=2.5 (from requests->lightfm)\n",
+            "  Using cached idna-3.10-py3-none-any.whl.metadata (10 kB)\n",
+            "Collecting urllib3<3,>=1.21.1 (from requests->lightfm)\n",
+            "  Using cached urllib3-2.3.0-py3-none-any.whl.metadata (6.5 kB)\n",
+            "Collecting certifi>=2017.4.17 (from requests->lightfm)\n",
+            "  Using cached certifi-2024.12.14-py3-none-any.whl.metadata (2.3 kB)\n",
+            "Collecting joblib>=1.2.0 (from scikit-learn->lightfm)\n",
+            "  Using cached joblib-1.4.2-py3-none-any.whl.metadata (5.4 kB)\n",
+            "Collecting threadpoolctl>=3.1.0 (from scikit-learn->lightfm)\n",
+            "  Using cached threadpoolctl-3.5.0-py3-none-any.whl.metadata (13 kB)\n",
+            "Using cached scipy-1.15.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (40.6 MB)\n",
+            "Using cached numpy-2.2.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (16.4 MB)\n",
+            "Using cached requests-2.32.3-py3-none-any.whl (64 kB)\n",
+            "Using cached scikit_learn-1.6.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (13.5 MB)\n",
+            "Using cached certifi-2024.12.14-py3-none-any.whl (164 kB)\n",
+            "Using cached charset_normalizer-3.4.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (143 kB)\n",
+            "Using cached idna-3.10-py3-none-any.whl (70 kB)\n",
+            "Using cached joblib-1.4.2-py3-none-any.whl (301 kB)\n",
+            "Using cached threadpoolctl-3.5.0-py3-none-any.whl (18 kB)\n",
+            "Using cached urllib3-2.3.0-py3-none-any.whl (128 kB)\n",
+            "Installing collected packages: urllib3, threadpoolctl, numpy, joblib, idna, charset-normalizer, certifi, scipy, requests, scikit-learn, lightfm\n",
+            "\u001b[31mERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.\n",
+            "pytensor 2.26.4 requires numpy<2,>=1.17.0, but you have numpy 2.2.2 which is incompatible.\n",
+            "langchain 0.3.14 requires numpy<2,>=1.22.4; python_version < \"3.12\", but you have numpy 2.2.2 which is incompatible.\n",
+            "thinc 8.2.5 requires numpy<2.0.0,>=1.19.0; python_version >= \"3.9\", but you have numpy 2.2.2 which is incompatible.\n",
+            "tensorflow 2.17.1 requires numpy<2.0.0,>=1.23.5; python_version <= \"3.11\", but you have numpy 2.2.2 which is incompatible.\n",
+            "gensim 4.3.3 requires numpy<2.0,>=1.18.5, but you have numpy 2.2.2 which is incompatible.\n",
+            "gensim 4.3.3 requires scipy<1.14.0,>=1.7.0, but you have scipy 1.15.1 which is incompatible.\n",
+            "numba 0.60.0 requires numpy<2.1,>=1.22, but you have numpy 2.2.2 which is incompatible.\n",
+            "cupy-cuda12x 12.2.0 requires numpy<1.27,>=1.20, but you have numpy 2.2.2 which is incompatible.\u001b[0m\u001b[31m\n",
+            "\u001b[0mSuccessfully installed certifi-2024.12.14 charset-normalizer-3.4.1 idna-3.10 joblib-1.4.2 lightfm-1.17 numpy-2.2.2 requests-2.32.3 scikit-learn-1.6.1 scipy-1.15.1 threadpoolctl-3.5.0 urllib3-2.3.0\n"
+          ]
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "application/vnd.colab-display-data+json": {
+              "pip_warning": {
+                "packages": [
+                  "certifi"
+                ]
+              },
+              "id": "c2f8e642916c4a6e897d40cb9207e61e"
+            }
+          },
+          "metadata": {}
+        },
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Found existing installation: lightfm 1.17\n",
+            "Uninstalling lightfm-1.17:\n",
+            "  Successfully uninstalled lightfm-1.17\n",
+            "Collecting lightfm\n",
+            "  Using cached lightfm-1.17-cp311-cp311-linux_x86_64.whl\n",
+            "Requirement already satisfied: numpy in /usr/local/lib/python3.11/dist-packages (from lightfm) (2.2.2)\n",
+            "Requirement already satisfied: scipy>=0.17.0 in /usr/local/lib/python3.11/dist-packages (from lightfm) (1.15.1)\n",
+            "Requirement already satisfied: requests in /usr/local/lib/python3.11/dist-packages (from lightfm) (2.32.3)\n",
+            "Requirement already satisfied: scikit-learn in /usr/local/lib/python3.11/dist-packages (from lightfm) (1.6.1)\n",
+            "Requirement already satisfied: charset-normalizer<4,>=2 in /usr/local/lib/python3.11/dist-packages (from requests->lightfm) (3.4.1)\n",
+            "Requirement already satisfied: idna<4,>=2.5 in /usr/local/lib/python3.11/dist-packages (from requests->lightfm) (3.10)\n",
+            "Requirement already satisfied: urllib3<3,>=1.21.1 in /usr/local/lib/python3.11/dist-packages (from requests->lightfm) (2.3.0)\n",
+            "Requirement already satisfied: certifi>=2017.4.17 in /usr/local/lib/python3.11/dist-packages (from requests->lightfm) (2024.12.14)\n",
+            "Requirement already satisfied: joblib>=1.2.0 in /usr/local/lib/python3.11/dist-packages (from scikit-learn->lightfm) (1.4.2)\n",
+            "Requirement already satisfied: threadpoolctl>=3.1.0 in /usr/local/lib/python3.11/dist-packages (from scikit-learn->lightfm) (3.5.0)\n",
+            "Installing collected packages: lightfm\n",
+            "Successfully installed lightfm-1.17\n"
+          ]
+        }
+      ],
+      "source": [
+        "!pip install lightfm --upgrade --ignore-installed scipy #for recommendation\n",
+        "#Uninstall and install lightfm to ensure it has all components\n",
+        "!pip uninstall lightfm -y\n",
+        "!pip install lightfm"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "\n",
+        "#load movie titles from u.item\n",
+        "movie_titles = pd.read_csv(\n",
+        "    'https://files.grouplens.org/datasets/movielens/ml-100k/u.item',\n",
+        "    sep='|',\n",
+        "    encoding='latin-1',\n",
+        "    usecols=[0, 1],  #only load item ID and title\n",
+        "    names=['item_id', 'title'],\n",
+        "    header=None\n",
+        ")\n",
+        "\n",
+        "# create a dictionary to map item IDs to titles\n",
+        "item_id_to_title = dict(zip(movie_titles['item_id'], movie_titles['title']))\n"
+      ],
+      "metadata": {
+        "id": "6khfx8u52Iud"
+      },
+      "execution_count": 12,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from lightfm.datasets import fetch_movielens\n",
+        "from lightfm import LightFM\n",
+        "import numpy as np"
+      ],
+      "metadata": {
+        "id": "C5dafBOGqb7P"
+      },
+      "execution_count": 1,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "data = fetch_movielens(min_rating=5.0) #fetching data from the dataset with minm rating of movie being 4\n",
+        "print(repr(data['train'])) #sparse matrix i.e. matrix which stores only non-zero elements of a matrix, the COOrdinate method in which it is stored here, is in 3 arrays, row and column indices, and values(3 rows)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "8Or_fuAMrm84",
+        "outputId": "076b3111-ba66-468c-d785-370ce4178f04"
+      },
+      "execution_count": 2,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "<COOrdinate sparse matrix of dtype 'int32'\n",
+            "\twith 19048 stored elements and shape (943, 1682)>\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "print(repr(data['test'])) #printing the test data now"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "4x8kvZffssOW",
+        "outputId": "dd0b11be-b07b-430b-f364-e69405e9cbcb"
+      },
+      "execution_count": 3,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "<COOrdinate sparse matrix of dtype 'int32'\n",
+            "\twith 2153 stored elements and shape (943, 1682)>\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#now we'll create the model\n",
+        "recmodel = LightFM(loss = 'warp') #warp is weighted approximate rank pairwise, ranking-based loss fn designed to optimize recommendations based on relevancy rather than accuracy, it takes how a user interacted with smthg calculates its predicted score(based on positive/-ve interaction) and based on that, we obtain the ranking, based on gradient descent, that a +ve predicted score is evolving in such a way that its ranked higher.\n",
+        "recmodel.fit(data['train'],epochs = 30, num_threads = 2)\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "KQgh1domtDK1",
+        "outputId": "31d001ea-8cab-4e60-a637-dee4f388f06f"
+      },
+      "execution_count": 7,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "<lightfm.lightfm.LightFM at 0x7dc8688d1c10>"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 7
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def samplerec(model, data, userids, item_id_to_title):#itemid(movieID) mapped to title\n",
+        "    n_users, n_items = data['train'].shape\n",
+        "    for user in userids:\n",
+        "        # Get positive interactions\n",
+        "        pos = [item_id_to_title[i + 1] for i in data['train'].tocsr()[user].indices]  # +1 if IDs are 1-based\n",
+        "        #in the pos, we're essentially converting the training data matrix to csr to get the non-zero values efficiently,user.indices retrieves item ID's that have been interacted with.\n",
+        "        # Get top predictions\n",
+        "        scores = model.predict(user, np.arange(n_items))\n",
+        "        top = [item_id_to_title[i + 1] for i in np.argsort(-scores)[:5]] #sorts in descending order(isliye -scores), argsort gives us the indices\n",
+        "\n",
+        "        print(f\"User {user}\")\n",
+        "        print(\"Positives\")\n",
+        "        for x in pos[:5]:\n",
+        "            print(f\" {x}\")\n",
+        "        print(\"Recommended\")\n",
+        "        for x in top:\n",
+        "            print(f\" {x}\")\n",
+        "\n"
+      ],
+      "metadata": {
+        "id": "1XB3wGhdygD2"
+      },
+      "execution_count": 18,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "samplerec(recmodel, data, [3, 25, 450], item_id_to_title)\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "E_h8higSzoKW",
+        "outputId": "a467305e-2b16-476d-e9ae-d029cba4de72"
+      },
+      "execution_count": 19,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "User 3\n",
+            "Positives\n",
+            " Contact (1997)\n",
+            " Air Force One (1997)\n",
+            " In & Out (1997)\n",
+            " Lost Highway (1997)\n",
+            " Cop Land (1997)\n",
+            "Recommended\n",
+            " Chasing Amy (1997)\n",
+            " Good Will Hunting (1997)\n",
+            " Lost Highway (1997)\n",
+            " Titanic (1997)\n",
+            " In & Out (1997)\n",
+            "User 25\n",
+            "Positives\n",
+            " Fargo (1996)\n",
+            " Godfather, The (1972)\n",
+            " L.A. Confidential (1997)\n",
+            " Titanic (1997)\n",
+            "Recommended\n",
+            " L.A. Confidential (1997)\n",
+            " Fargo (1996)\n",
+            " English Patient, The (1996)\n",
+            " Titanic (1997)\n",
+            " Star Wars (1977)\n",
+            "User 450\n",
+            "Positives\n",
+            " Event Horizon (1997)\n",
+            " Scream (1996)\n",
+            " Conspiracy Theory (1997)\n",
+            " Edge, The (1997)\n",
+            " Game, The (1997)\n",
+            "Recommended\n",
+            " First Wives Club, The (1996)\n",
+            " Air Force One (1997)\n",
+            " Rock, The (1996)\n",
+            " Kiss the Girls (1997)\n",
+            " Up Close and Personal (1996)\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
